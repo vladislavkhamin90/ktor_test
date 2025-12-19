@@ -7,7 +7,7 @@ group = "com.example"
 version = "0.0.1"
 
 application {
-    mainClass = "ApplicationKt"
+    mainClass = "com.example.ApplicationKt"
 }
 
 dependencies {
