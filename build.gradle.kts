@@ -1,7 +1,7 @@
 plugins {
-    kotlin("jvm") version "2.0.21" // Проверьте актуальную версию Kotlin
-    id("io.ktor.plugin") version "3.0.0" // Проверьте актуальную версию Ktor
-    id("com.github.johnrengelman.shadow") version "8.1.1" // Добавьте этот плагин для fat JAR
+    kotlin("jvm") version "2.0.21"
+    id("io.ktor.plugin") version "3.0.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "com.example"
@@ -16,11 +16,12 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core:2.3.11") // Убедитесь, что версия актуальная
+    implementation("io.ktor:ktor-server-core:2.3.11")
     implementation("io.ktor:ktor-server-netty:2.3.11")
     implementation("ch.qos.logback:logback-classic:1.5.6")
     implementation("io.ktor:ktor-server-config-yaml:2.3.11")
-    
+    implementation("io.ktor:ktor-server-websockets")
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
     testImplementation("io.ktor:ktor-server-test-host:2.3.11")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.24")
 }
