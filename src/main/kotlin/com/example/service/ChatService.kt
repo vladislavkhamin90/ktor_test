@@ -1,4 +1,4 @@
-package com.plugin.service
+package com.example.service
 
 import io.ktor.websocket.*
 import java.util.concurrent.ConcurrentHashMap
