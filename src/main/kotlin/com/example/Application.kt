@@ -1,13 +1,11 @@
 package com.example
 
+import configureRouting
+import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import com.example.plugins.configureRouting
 import com.example.plugins.configureSerialization
 import com.example.plugins.configureWebSockets
-import com.example.routes.chatSocket
-import io.ktor.server.application.*
-import io.ktor.server.routing.*
 
 fun main() {
     embeddedServer(
@@ -23,5 +21,4 @@ fun Application.module() {
     configureSerialization()
     configureWebSockets()
     configureRouting()
-    }
 }
