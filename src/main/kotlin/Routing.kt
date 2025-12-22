@@ -1,9 +1,8 @@
-package com.plugin.plugins
-
-import com.plugin.example.routes.authRoutes
-import com.plugin.example.routes.userRoutes
-import com.plugin.example.routes.chatSocket
+import com.example.routes.authRoutes
+import com.example.routes.userRoutes
+import com.example.routes.chatSocket
 import io.ktor.server.application.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
