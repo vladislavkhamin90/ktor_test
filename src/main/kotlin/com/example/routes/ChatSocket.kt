@@ -1,44 +1,44 @@
-package com.example.routes
+package com.plugin.routes
 
-import com.example.domain.Message
-import com.example.service.ChatService
+import com.plugin.domain.Message
+import com.plugin.repository.UserRepository
+import com.plugin.service.ChatService
+import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 fun Route.chatSocket() {
 
     webSocket("/ws/chat") {
 
-        val username = call.parameters["username"]
+        val token = call.parameters["token"]
             ?: return@webSocket close(
-                CloseReason(
-                    CloseReason.Codes.CANNOT_ACCEPT,
-                    "No username"
-                )
+                CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "No token")
             )
 
-        ChatService.addUser(username, this)
+        val user = UserRepository.getById(token)
+            ?: return@webSocket close(
+                CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Invalid token")
+            )
+
+        ChatService.connect(user.id, this)
 
         try {
             for (frame in incoming) {
                 if (frame is Frame.Text) {
-                    val text = frame.readText()
 
-                    val message = Message(
-                        sender = username,
-                        text = text
-                    )
+                    val message =
+                        Json.decodeFromString<Message>(frame.readText())
 
-                    ChatService.broadcast(
-                        Json.encodeToString(message)
-                    )
+                    // отправляем обоим участникам
+                    ChatService.send(message.to, Json.encodeToString(message))
+                    ChatService.send(message.from, Json.encodeToString(message))
                 }
             }
         } finally {
-            ChatService.removeUser(username)
+            ChatService.disconnect(user.id)
         }
     }
 }
