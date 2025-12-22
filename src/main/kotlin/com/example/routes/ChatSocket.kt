@@ -1,4 +1,4 @@
-package com.plugin.routes
+package com.example.routes
 
 import com.plugin.domain.Message
 import com.plugin.repository.UserRepository
@@ -26,17 +26,24 @@ fun Route.chatSocket() {
         ChatService.connect(user.id, this)
 
         try {
+            val json = Json { ignoreUnknownKeys = true }
             for (frame in incoming) {
                 if (frame is Frame.Text) {
-
-                    val message =
-                        Json.decodeFromString<Message>(frame.readText())
-
-                    // отправляем обоим участникам
-                    ChatService.send(message.to, Json.encodeToString(message))
-                    ChatService.send(message.from, Json.encodeToString(message))
+                    val message = json.decodeFromString(
+                        Message.serializer(),
+                        frame.readText()
+                    )
+            
+                    val encoded = json.encodeToString(
+                        Message.serializer(),
+                        message
+                    )
+            
+                    ChatService.send(message.to, encoded)
+                    ChatService.send(message.from, encoded)
                 }
             }
+
         } finally {
             ChatService.disconnect(user.id)
         }
