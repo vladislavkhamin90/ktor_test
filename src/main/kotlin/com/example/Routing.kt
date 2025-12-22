@@ -1,3 +1,5 @@
+package com.example
+
 import com.example.routes.authRoutes
 import com.example.routes.userRoutes
 import com.example.routes.chatSocket
