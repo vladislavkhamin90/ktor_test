@@ -6,9 +6,15 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
     routing {
+        routing {
+
         get("/") {
-            call.respondText("Hello from Ktor on Render!")
+            call.respondText("Message server is running")
         }
+
+        authRoutes()
+        userRoutes()
+        chatSocket()
         
         get("/health") {
             call.respond(mapOf("status" to "OK"))
