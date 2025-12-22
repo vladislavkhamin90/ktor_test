@@ -20,8 +20,6 @@ fun main() {
 fun Application.module() {
     configureSerialization()
     configureWebSockets()
-
-    routing {
-        chatSocket()
+    configureRouting()
     }
 }
