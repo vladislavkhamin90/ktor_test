@@ -1,6 +1,6 @@
-package com.plugin.repository
+package com.example.repository
 
-import com.plugin.domain.User
+import com.example.domain.User
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
